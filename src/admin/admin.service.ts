@@ -39,6 +39,7 @@ export class AdminService {
     return this.adminRepo.save(admin);
   }
 
+  
   async remove(id: number) {
     const admin = await this.adminRepo.findOne({ where: { id } });
     if (!admin) {

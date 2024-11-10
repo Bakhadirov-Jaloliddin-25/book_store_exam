@@ -47,6 +47,10 @@ export class AdminSelfGuard implements CanActivate {
 
     req.admin = payload;
 
+    if (req.admin.is_creator) {
+      return true;
+    }
+
     if (String(req.admin.id) !== req.params.id) {
       throw new ForbiddenException("Ruxsat etilmagan admin");
     }

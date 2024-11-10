@@ -14,6 +14,7 @@ import { UpdateCustomerDto } from "./dto/update-customer.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { Customer } from "./entities/customer.entity";
 import { AdminGuard } from "../guards/admin.guard";
+import { SelfGuard } from "../guards/self.guard";
 
 @Controller("customers")
 export class CustomersController {
@@ -44,6 +45,7 @@ export class CustomersController {
     description: "Get Customer by ID",
     type: Customer,
   })
+  @UseGuards(SelfGuard)
   @Get("get/:id")
   findOne(@Param("id") id: string) {
     return this.customersService.findOne(+id);
@@ -55,7 +57,7 @@ export class CustomersController {
     description: "Update Customer by ID",
     type: Customer,
   })
-  @UseGuards(AdminGuard)
+  @UseGuards(SelfGuard)
   @Patch("update/:id")
   update(
     @Param("id") id: string,
@@ -70,7 +72,7 @@ export class CustomersController {
     description: "Delete Customer by ID",
     type: Customer,
   })
-  @UseGuards(AdminGuard)
+  @UseGuards(SelfGuard)
   @Delete("delete/:id")
   remove(@Param("id") id: string) {
     return this.customersService.remove(+id);

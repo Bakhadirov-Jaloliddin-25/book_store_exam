@@ -1,0 +1,31 @@
+import { Author } from "../../authors/entities/author.entity";
+import { Publisher } from "../../publishers/entities/publisher.entity";
+import { Genre } from "../../genres/entities/genre.entity";
+import { BookStore } from "../../book_store/entities/book_store.entity";
+import { Discount } from "../../discounts/entities/discount.entity";
+import { OrderItem } from "../../order_items/entities/order_item.entity";
+import { CartItem } from "../../cart_items/entities/cart_item.entity";
+import { Rating } from "../../ratings/entities/rating.entity";
+import { Review } from "../../reviews/entities/review.entity";
+export declare class Book {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    author_id: number;
+    genre_id: number;
+    publisher_id: number;
+    num_of_pages: number;
+    year_of_publication: Date;
+    stock: number;
+    book_store_id: number;
+    author: Author;
+    genre: Genre;
+    publisher: Publisher;
+    book_store: BookStore;
+    discounts: Discount[];
+    order_items: OrderItem[];
+    cart_items: CartItem[];
+    ratings: Rating[];
+    reviews: Review[];
+}

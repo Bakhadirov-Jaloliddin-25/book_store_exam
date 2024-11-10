@@ -56,7 +56,7 @@ export class AdminController {
 
   @ApiOperation({ summary: "ID bo'yicha adminlarni yangilash" })
   @ApiResponse({ status: 200, description: "Update admin by ID", type: Admin })
-  @UseGuards(AdminSelfGuard, CreatorGuard)
+  @UseGuards(AdminSelfGuard)
   @Patch("update/:id")
   update(@Param("id") id: string, @Body() updateAdminDto: UpdateAdminDto) {
     return this.adminService.update(+id, updateAdminDto);
@@ -64,7 +64,7 @@ export class AdminController {
 
   @ApiOperation({ summary: "ID bo'yicha adminlarni o'chirish" })
   @ApiResponse({ status: 200, description: "Delete admin by ID", type: Admin })
-  @UseGuards(AdminSelfGuard, CreatorGuard)
+  @UseGuards(AdminSelfGuard)
   @Delete("delete/:id")
   remove(@Param("id") id: string) {
     return this.adminService.remove(+id);

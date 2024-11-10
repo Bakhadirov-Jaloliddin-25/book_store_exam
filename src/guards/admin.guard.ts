@@ -42,7 +42,7 @@ export class AdminGuard implements CanActivate {
         error,
       });
     }
-    if (!payload.is_admin) {
+    if (!payload.is_admin || !payload.is_creator) {
       throw new ForbiddenException({
         message: "Ruxsat yo'q",
       });

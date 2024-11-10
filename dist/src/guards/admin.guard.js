@@ -43,7 +43,7 @@ let AdminGuard = class AdminGuard {
                 error,
             });
         }
-        if (!payload.is_admin) {
+        if (!payload.is_admin || !payload.is_creator) {
             throw new common_1.ForbiddenException({
                 message: "Ruxsat yo'q",
             });

@@ -21,6 +21,7 @@ const swagger_1 = require("@nestjs/swagger");
 const admin_entity_1 = require("./entities/admin.entity");
 const creator_guard_1 = require("../guards/creator.guard");
 const admin_self_guard_1 = require("../guards/admin-self.guard");
+const jwt_auth_guard_1 = require("../guards/jwt-auth.guard");
 let AdminController = class AdminController {
     constructor(adminService) {
         this.adminService = adminService;
@@ -49,6 +50,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Admin yaratish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Created Admin", type: admin_entity_1.Admin }),
     (0, common_1.UseGuards)(creator_guard_1.CreatorGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)("create"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -59,6 +61,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Barcha adminlarni ko'rish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "List of admins", type: [admin_entity_1.Admin] }),
     (0, common_1.UseGuards)(creator_guard_1.CreatorGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -68,6 +71,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha adminlarni ko'rish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Get admin by ID", type: admin_entity_1.Admin }),
     (0, common_1.UseGuards)(admin_self_guard_1.AdminSelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
@@ -78,6 +82,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Email bo'yicha adminlarni ko'rish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Get admin by Email", type: admin_entity_1.Admin }),
     (0, common_1.UseGuards)(creator_guard_1.CreatorGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get/email/:email"),
     __param(0, (0, common_1.Param)("email")),
     __metadata("design:type", Function),
@@ -88,6 +93,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha adminlarni yangilash" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Update admin by ID", type: admin_entity_1.Admin }),
     (0, common_1.UseGuards)(admin_self_guard_1.AdminSelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Patch)("update/:id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
@@ -99,6 +105,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha adminlarni o'chirish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Delete admin by ID", type: admin_entity_1.Admin }),
     (0, common_1.UseGuards)(admin_self_guard_1.AdminSelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)("delete/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),

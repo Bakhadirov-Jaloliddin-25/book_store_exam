@@ -15,6 +15,7 @@ import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { Customer } from "./entities/customer.entity";
 import { AdminGuard } from "../guards/admin.guard";
 import { SelfGuard } from "../guards/self.guard";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 
 @Controller("customers")
 export class CustomersController {
@@ -34,6 +35,7 @@ export class CustomersController {
     type: [Customer],
   })
   @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get")
   findAll() {
     return this.customersService.findAll();
@@ -46,6 +48,7 @@ export class CustomersController {
     type: Customer,
   })
   @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get/:id")
   findOne(@Param("id") id: string) {
     return this.customersService.findOne(+id);
@@ -58,6 +61,7 @@ export class CustomersController {
     type: Customer,
   })
   @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch("update/:id")
   update(
     @Param("id") id: string,
@@ -73,6 +77,7 @@ export class CustomersController {
     type: Customer,
   })
   @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete("delete/:id")
   remove(@Param("id") id: string) {
     return this.customersService.remove(+id);

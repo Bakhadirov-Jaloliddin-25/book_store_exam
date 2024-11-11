@@ -6,12 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { DeliveryService } from "./delivery.service";
 import { CreateDeliveryDto } from "./dto/create-delivery.dto";
 import { UpdateDeliveryDto } from "./dto/update-delivery.dto";
 import { Delivery } from "./entities/delivery.entity";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { AdminGuard } from "../guards/admin.guard";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard";
+import { SelfGuard } from "../guards/self.guard";
 
 @Controller("delivery")
 export class DeliveryController {
@@ -19,8 +23,8 @@ export class DeliveryController {
 
   @ApiOperation({ summary: "Delivery yaratish" })
   @ApiResponse({ status: 200, description: "Created Delivery", type: Delivery })
-  // @UseGuards(AdminGuard)
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard)
   @Post("create")
   create(@Body() createDeliveryDto: CreateDeliveryDto) {
     return this.deliveryService.create(createDeliveryDto);
@@ -32,6 +36,8 @@ export class DeliveryController {
     description: "List of Deliverys",
     type: [Delivery],
   })
+  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get")
   findAll() {
     return this.deliveryService.findAll();
@@ -43,6 +49,8 @@ export class DeliveryController {
     description: "Get Delivery by ID",
     type: Delivery,
   })
+  @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get/:id")
   findOne(@Param("id") id: string) {
     return this.deliveryService.findOne(+id);
@@ -54,8 +62,8 @@ export class DeliveryController {
     description: "Update Delivery by ID",
     type: Delivery,
   })
-  // @UseGuards(AdminGuard)
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch("update/:id")
   update(
     @Param("id") id: string,
@@ -70,8 +78,8 @@ export class DeliveryController {
     description: "Delete Delivery by ID",
     type: Delivery,
   })
-  // @UseGuards(AdminGuard)
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(SelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete("delete/:id")
   remove(@Param("id") id: string) {
     return this.deliveryService.remove(+id);

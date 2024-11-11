@@ -21,6 +21,7 @@ const swagger_1 = require("@nestjs/swagger");
 const customer_entity_1 = require("./entities/customer.entity");
 const admin_guard_1 = require("../guards/admin.guard");
 const self_guard_1 = require("../guards/self.guard");
+const jwt_auth_guard_1 = require("../guards/jwt-auth.guard");
 let CustomersController = class CustomersController {
     constructor(customersService) {
         this.customersService = customersService;
@@ -62,6 +63,7 @@ __decorate([
         type: [customer_entity_1.Customer],
     }),
     (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -75,6 +77,7 @@ __decorate([
         type: customer_entity_1.Customer,
     }),
     (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
@@ -89,6 +92,7 @@ __decorate([
         type: customer_entity_1.Customer,
     }),
     (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Patch)("update/:id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
@@ -104,6 +108,7 @@ __decorate([
         type: customer_entity_1.Customer,
     }),
     (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)("delete/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),

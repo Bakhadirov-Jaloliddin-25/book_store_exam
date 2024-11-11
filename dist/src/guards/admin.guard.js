@@ -18,37 +18,11 @@ let AdminGuard = class AdminGuard {
     }
     canActivate(context) {
         const req = context.switchToHttp().getRequest();
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            throw new common_1.UnauthorizedException({
-                message: "Headerda Token berilmagan",
-            });
-        }
-        const bearer = authHeader.split(" ")[0];
-        const token = authHeader.split(" ")[1];
-        if (bearer !== "Bearer" || !token) {
-            throw new common_1.UnauthorizedException({
-                message: "Bearer va token berilmagan",
-            });
-        }
-        let payload;
-        try {
-            payload = this.jwtService.verify(token, {
-                secret: process.env.ACCESS_TOKEN_KEY,
-            });
-        }
-        catch (error) {
-            throw new common_1.UnauthorizedException({
-                message: "Token verifikatsiyadan o'tmadi!",
-                error,
-            });
-        }
-        if (!payload.is_admin || !payload.is_creator) {
+        if (!req.user.is_admin && !req.user.is_creator) {
             throw new common_1.ForbiddenException({
                 message: "Ruxsat yo'q",
             });
         }
-        req.admin = payload;
         return true;
     }
 };

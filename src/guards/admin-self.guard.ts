@@ -16,42 +16,12 @@ export class AdminSelfGuard implements CanActivate {
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
-    const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
-      throw new UnauthorizedException({
-        message: "Headerda Token berilmagan",
-      });
-    }
-
-    const [bearer, token] = authHeader.split(" ");
-
-    if (bearer !== "Bearer" || !token) {
-      throw new UnauthorizedException({
-        message: "Bearer va token berilmagan",
-      });
-    }
-
-    let payload: any;
-
-    try {
-      payload = this.jwtService.verify(token, {
-        secret: process.env.ACCESS_TOKEN_KEY,
-      });
-    } catch (error) {
-      throw new UnauthorizedException({
-        message: "Token verifikatsiyadan o'tmadi!",
-        error,
-      });
-    }
-
-    req.admin = payload;
-
-    if (req.admin.is_creator) {
+    if (req.user.is_creator) {
       return true;
     }
 
-    if (String(req.admin.id) !== req.params.id) {
+    if (String(req.user.id) !== req.params.id) {
       throw new ForbiddenException("Ruxsat etilmagan admin");
     }
 

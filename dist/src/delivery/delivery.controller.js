@@ -19,6 +19,9 @@ const create_delivery_dto_1 = require("./dto/create-delivery.dto");
 const update_delivery_dto_1 = require("./dto/update-delivery.dto");
 const delivery_entity_1 = require("./entities/delivery.entity");
 const swagger_1 = require("@nestjs/swagger");
+const admin_guard_1 = require("../guards/admin.guard");
+const jwt_auth_guard_1 = require("../guards/jwt-auth.guard");
+const self_guard_1 = require("../guards/self.guard");
 let DeliveryController = class DeliveryController {
     constructor(deliveryService) {
         this.deliveryService = deliveryService;
@@ -46,6 +49,8 @@ exports.DeliveryController = DeliveryController;
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Delivery yaratish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Created Delivery", type: delivery_entity_1.Delivery }),
+    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)("create"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -59,6 +64,8 @@ __decorate([
         description: "List of Deliverys",
         type: [delivery_entity_1.Delivery],
     }),
+    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -71,6 +78,8 @@ __decorate([
         description: "Get Delivery by ID",
         type: delivery_entity_1.Delivery,
     }),
+    (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("get/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
@@ -84,6 +93,8 @@ __decorate([
         description: "Update Delivery by ID",
         type: delivery_entity_1.Delivery,
     }),
+    (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Patch)("update/:id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
@@ -98,6 +109,8 @@ __decorate([
         description: "Delete Delivery by ID",
         type: delivery_entity_1.Delivery,
     }),
+    (0, common_1.UseGuards)(self_guard_1.SelfGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)("delete/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),

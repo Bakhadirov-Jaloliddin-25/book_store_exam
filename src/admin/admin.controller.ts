@@ -16,6 +16,7 @@ import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Admin } from "./entities/admin.entity";
 import { CreatorGuard } from "../guards/creator.guard";
 import { AdminSelfGuard } from "../guards/admin-self.guard";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 
 @ApiTags("Admins")
 @Controller("admin")
@@ -25,6 +26,7 @@ export class AdminController {
   @ApiOperation({ summary: "Admin yaratish" })
   @ApiResponse({ status: 200, description: "Created Admin", type: Admin })
   @UseGuards(CreatorGuard)
+  @UseGuards(JwtAuthGuard)
   @Post("create")
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
@@ -33,6 +35,7 @@ export class AdminController {
   @ApiOperation({ summary: "Barcha adminlarni ko'rish" })
   @ApiResponse({ status: 200, description: "List of admins", type: [Admin] })
   @UseGuards(CreatorGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get")
   findAll() {
     return this.adminService.findAll();
@@ -41,6 +44,7 @@ export class AdminController {
   @ApiOperation({ summary: "ID bo'yicha adminlarni ko'rish" })
   @ApiResponse({ status: 200, description: "Get admin by ID", type: Admin })
   @UseGuards(AdminSelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get/:id")
   findOne(@Param("id") id: string) {
     return this.adminService.findOne(+id);
@@ -49,6 +53,7 @@ export class AdminController {
   @ApiOperation({ summary: "Email bo'yicha adminlarni ko'rish" })
   @ApiResponse({ status: 200, description: "Get admin by Email", type: Admin })
   @UseGuards(CreatorGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("get/email/:email")
   findAdminByEmail(@Param("email") email: string) {
     return this.adminService.findAdminByEmail(email);
@@ -57,6 +62,7 @@ export class AdminController {
   @ApiOperation({ summary: "ID bo'yicha adminlarni yangilash" })
   @ApiResponse({ status: 200, description: "Update admin by ID", type: Admin })
   @UseGuards(AdminSelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch("update/:id")
   update(@Param("id") id: string, @Body() updateAdminDto: UpdateAdminDto) {
     return this.adminService.update(+id, updateAdminDto);
@@ -65,6 +71,7 @@ export class AdminController {
   @ApiOperation({ summary: "ID bo'yicha adminlarni o'chirish" })
   @ApiResponse({ status: 200, description: "Delete admin by ID", type: Admin })
   @UseGuards(AdminSelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete("delete/:id")
   remove(@Param("id") id: string) {
     return this.adminService.remove(+id);

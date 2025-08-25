@@ -22,6 +22,7 @@ const creator_guard_1 = require("../guards/creator.guard");
 const cookie_getter_decorator_1 = require("../decorators/cookie_getter.decorator");
 const create_customer_dto_1 = require("../customers/dto/create-customer.dto");
 const create_delivery_dto_1 = require("../delivery/dto/create-delivery.dto");
+const jwt_auth_guard_1 = require("../guards/jwt-auth.guard");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -83,6 +84,7 @@ __decorate([
         },
     }),
     (0, common_1.UseGuards)(creator_guard_1.CreatorGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     (0, common_1.Post)("add-admin"),
     __param(0, (0, common_1.Body)()),

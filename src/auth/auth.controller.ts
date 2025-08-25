@@ -16,6 +16,7 @@ import { CookieGetter } from "../decorators/cookie_getter.decorator";
 import { Response } from "express";
 import { CreateCustomerDto } from "../customers/dto/create-customer.dto";
 import { CreateDeliveryDto } from "../delivery/dto/create-delivery.dto";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 
 @ApiTags("Authorization (Ro'yhatdan o'tish)")
 @Controller("auth")
@@ -40,6 +41,7 @@ export class AuthController {
     },
   })
   @UseGuards(CreatorGuard)
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post("add-admin")
   async add(
